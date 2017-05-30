@@ -1,0 +1,6 @@
+#!/bin/bash
+set -e
+
+set -x
+pv < /dev/zero > /ZERO || echo 'ok'
+rm /ZERO
