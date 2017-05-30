@@ -1,0 +1,29 @@
+#!/usr/bin/env python3
+from pathlib import Path
+import argparse
+
+
+HOSTS_TEMPLATE = """\
+127.0.0.1	localhost
+127.0.1.1	{hostname}
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+"""
+
+def set_hostname(hostname):
+    with open('/etc/hostname', 'w', encoding='utf8') as f:
+        f.write("{}\n".format(hostname))
+    with open('/etc/hosts', 'w', encoding='utf8') as f:
+        f.write(HOSTS_TEMPLATE.format(hostname=hostname))
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('hostname')
+    args = parser.parse_args()
+    set_hostname(args.hostname)
+
+if __name__ == '__main__':
+    main()
